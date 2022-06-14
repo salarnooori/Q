@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Q.Areas.Identity.Data;
 using Q.Data;
+using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("QUserContextConnection") ?? throw new InvalidOperationException("Connection string 'QUserContextConnection' not found.");
 
@@ -20,6 +21,8 @@ builder.Services.AddDefaultIdentity<QUser>(options => {
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<QTaskContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("QTaskContext") ?? throw new InvalidOperationException("Connection string 'QTaskContext' not found.")));
 
 var app = builder.Build();
 
