@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Q</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Q.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container text-center" style="margin-top:70px;">
+    <div class="row">
+        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto my-au">
+        <div class="card card-signin my-5">
+            <div class="card-header">
+                <ul class="nav nav-tabs nav-fill card-header-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" href='/Identity/Account/Register'>Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href='/Identity/Account/Login'>Login</a>
+                    </li>
+                </ul>
+            </div>
+         
+            <div class="card-body">
+                @RenderBody(); 
+            @*<h5 class="card-title text-center">Sign In</h5>
+            <form class="form-signin">
+                <div class="form-label-group">
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <label for="inputEmail">Email address</label>
+                </div>
+
+                <div class="form-label-group">
+                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <label for="inputPassword">Password</label>
+                </div>
+
+                <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                <label class="custom-control-label" for="customCheck1">Remember password</label>
+                </div>
+                <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+                </form>*@
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        $(function(){
+            var current = location.pathname;
+            $('.nav-tab li a').each(function(){
+                if(current.indexOf($(this).attr('href')) !== -1){
+                    $(this).addClass('active');
+                }
+            })
+        })
+    </script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

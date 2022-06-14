@@ -8,8 +8,13 @@ var connectionString = builder.Configuration.GetConnectionString("QUserContextCo
 builder.Services.AddDbContext<QUserContext>(options =>
     options.UseSqlServer(connectionString));;
 
-builder.Services.AddDefaultIdentity<QUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<QUserContext>();;
+builder.Services.AddDefaultIdentity<QUser>(options => {
+    options.SignIn.RequireConfirmedAccount = false;
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireUppercase = false;
+    })
+    .AddEntityFrameworkStores<QUserContext>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
