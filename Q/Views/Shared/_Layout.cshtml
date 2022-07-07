@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using Q.Areas.Identity.Data
+
+@inject SignInManager<QUser> SignInManager
+@inject UserManager<QUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -9,20 +15,21 @@
     <link rel="stylesheet" href="~/Q.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <header class="bg-warning">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <p>experience : 0</p>
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"> Wellcome To Q</a>
+                <div class="row navbar-collapse collapse d-sm-inline-flex justify-content-between text-center">
+                    <p class="m-0 col-4">Score : @UserManager.GetUserAsync(User).Result.Experience</p>
+                    <a class="m-0 col-4 navbar-brand text-dark" asp-area="" asp-controller="Home" asp-action="Index"> Wellcome To Q</a>
                     <partial name="_LoginPartial.cshtml" />
+                    
                 </div>
             </div>
         </nav>
     </header>
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3 text-white">
             @RenderBody()
         </main>
     </div>

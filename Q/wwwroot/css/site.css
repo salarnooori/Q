@@ -1,20 +1,20 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
 
 :root {
@@ -135,4 +135,34 @@ body {
 
 .form-control {
     background-color: #176d99 !important;
+}
+
+.menu-box {
+    padding: 20px;
+    border: 1px solid #00fcff;
+    border-radius: 1rem;
+    background: linear-gradient(to top, #a70000, #dfc931);
+    box-shadow: 0 10px 5px 0px rgba(0, 0, 0, 0.3) !important;
+}
+
+a:hover {
+    text-decoration: none;
+    color: aqua !important;
+}
+
+a {
+    text-decoration: none;
+    color: aquamarine !important;
+}
+
+table {
+    color: darkorange !important;
+}
+
+td {
+    border: 1px solid darkorange;
+}
+
+.modal-dialog {
+    max-width: 80% !important;
 }

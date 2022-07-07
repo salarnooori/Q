@@ -1,4 +1,151 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
-    
+
+}
+@model IEnumerable<Q.Models.Task>
+
+<div class="container">
+    <h1 class="m-5 text-white">
+        Dashboard
+    </h1>
+    <hr />
+    <div class="row flex justify-content-around">
+        <div class="col-3 m-3 border border-2 shadow text-center menu-box">
+            <a class="text-white text-decoration-none" href="/Identity/Account/Manage">
+                <h3>Account</h3>
+                <hr />
+                <p>manage your Account</p>
+            </a>
+        </div>
+        <div class="col-3 m-3 border border-2 shadow text-center menu-box">
+            <a class="text-white text-decoration-none" href="/Tasks">
+                <h3>Task</h3>
+                <hr />
+                <p>manage your Tasks</p>
+            </a>
+        </div>
+        <div class="col-3 m-3 border border-2 shadow text-center menu-box">
+            <a class="text-white text-decoration-none" href="/Categories">
+                <h3>Category</h3>
+                <hr />
+                <p>manage your Categories</p>
+            </a>
+        </div>
+        <div class="col-3 m-3 border border-2 shadow text-center menu-box">
+            <a class="text-white text-decoration-none" href="/Themes">
+                <h3>Theme</h3>
+                <hr />
+                <p>manage your Themes</p>
+            </a>
+        </div>
+        <div class="col-3 m-3 border border-2 shadow text-center menu-box">
+            <a class="text-white text-decoration-none" href="/Tasks/FinishedTasks">
+                <h3>Finished Tasks</h3>
+                <hr />
+                <p>list of finished tasks</p>
+            </a>
+        </div>
+        <div class="col-3 m-3 border border-2 shadow text-center menu-box">
+            <a class="text-white text-decoration-none" href="/Tasks/UnfinishedTasks">
+                <h3>Unfinished Tasks</h3>
+                <hr />
+                <p>list of unfinished tasks</p>
+            </a>
+        </div>
+        <div class="col-3 m-3 border border-2 shadow text-center menu-box">
+            <a class="text-white text-decoration-none" href="/Tasks/CategoryTasks">
+                <h3>Tasks by Category</h3>
+                <hr />
+                <p>list of tasks in special category</p>
+            </a>
+        </div>
+        <div class="col-3 m-3 border border-2 shadow text-center menu-box">
+            <a class="text-white text-decoration-none" href="/Tasks/DateTasks">
+                <h3>Tasks by Date</h3>
+                <hr />
+                <p>list of tasks in special date</p>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="text-dark modal fade" id="exampleModal" tabindex="-1" aria-labelledby="modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal">Tasks for @DateTime.Now.ToShortDateString()</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Subject)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.StartTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.EndTime)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Details)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.isFinish)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Score)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Subject)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StartTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.EndTime)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Details)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.isFinish)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Score)
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+@section Scripts{
+<script type="text/javascript">
+    $(window).on('load', function() {
+        $('#exampleModal').modal('show');
+    });
+</script>
 }

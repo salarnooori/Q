@@ -1,18 +1,18 @@
 ﻿@model IEnumerable<Q.Models.Task>
 
 @{
-    ViewData["Title"] = "Tasks";
+    ViewData["Title"] = "Unfinished";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>All Tasks</h1>
+<h1>Unfinished Tasks</h1>
+
 <p>
     <a asp-action="Index" asp-controller="Home">Back to home</a>
 </p>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<hr />
+
 <table class="table">
     <thead>
         <tr>

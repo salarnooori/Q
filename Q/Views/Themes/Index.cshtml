@@ -1,11 +1,16 @@
 ﻿@model IEnumerable<Q.Models.Theme>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "All Themes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>All Themes</h1>
+
+
+<p>
+    <a asp-action="Index" asp-controller="Home">Back to home</a>
+</p>
 
 <p>
     <a asp-action="Create">Create New</a>

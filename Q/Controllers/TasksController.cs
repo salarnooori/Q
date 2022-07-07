@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Q.Areas.Identity.Data;
 using Q.Models;
 
 namespace Q.Controllers
@@ -12,10 +14,12 @@ namespace Q.Controllers
     public class TasksController : Controller
     {
         private readonly QTaskContext _context;
+        private readonly UserManager<QUser> _userManager;
 
-        public TasksController(QTaskContext context)
+        public TasksController(QTaskContext context, UserManager<QUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: Tasks
@@ -24,6 +28,68 @@ namespace Q.Controllers
               return _context.Task != null ? 
                           View(await _context.Task.ToListAsync()) :
                           Problem("Entity set 'QTaskContext.Task'  is null.");
+        }
+
+        public async Task<IActionResult> FinishedTasks()
+        {
+            return _context.Task != null ?
+                        View(await _context.Task.Where(t => t.isFinish == true).ToListAsync()) :
+                        Problem("Entity set 'QTaskContext.Task'  is null.");
+        }
+
+        public async Task<IActionResult> UnfinishedTasks()
+        {
+            return _context.Task != null ?
+                        View(await _context.Task.Where(t => t.isFinish == false).ToListAsync()) :
+                        Problem("Entity set 'QTaskContext.Task'  is null.");
+        }
+
+        public async Task<IActionResult> DateTasks([Bind("date")] DateTime? date)
+        {
+            if (date != null)
+            {
+                return RedirectToAction("SearchDateTasks",date);    
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        public async Task<IActionResult> SearchDateTasks(DateTime? date)
+        {
+            ViewData["date"] = date;
+            return View(await _context.Task.Where(t => t.EndTime.Year >= date.Value.Year && t.EndTime.Month >= date.Value.Month && t.EndTime.Day >= date.Value.Day
+                                                    && t.StartTime.Year <= date.Value.Year && t.StartTime.Month <= date.Value.Month && t.StartTime.Day <= date.Value.Day).ToListAsync());
+        }
+
+        public async Task<IActionResult> CategoryTasks([Bind("category")] int? category)
+        {
+            if (category != null)
+            {
+                Category cat = _context.Category.FirstOrDefault(c => c.Id == category);
+
+                return RedirectToAction("SearchCategoryTasks", cat);
+            }
+            else
+            {
+                return View();
+            }
+        }
+
+        public async Task<IActionResult> SearchCategoryTasks(Category cat)
+        {
+           
+            if(cat != null)
+            {
+                ViewData["category"] = cat.Name;
+            }
+            else
+            {
+                ViewData["category"] = "This Category not exist.";
+            }
+            
+            return View(await _context.Task.Where(t => t.CategoryId == cat.Id).ToListAsync());
         }
 
         // GET: Tasks/Details/5
@@ -79,7 +145,32 @@ namespace Q.Controllers
             {
                 return NotFound();
             }
-            return View(task);
+            if(task.isFinish == false)
+            {
+                if (task.EndTime > DateTime.UtcNow)
+                {
+                    return View(task);
+                }
+                else
+                {
+                    return RedirectToAction("outOfDate");
+                }
+                
+            }
+            else
+            {
+                return RedirectToAction("notEdit");
+            }
+        }
+
+        public IActionResult outOfDate()
+        {
+            return View();
+        }
+
+        public IActionResult notEdit()
+        {
+            return View();
         }
 
         // POST: Tasks/Edit/5
@@ -98,6 +189,12 @@ namespace Q.Controllers
             {
                 try
                 {
+                    if (task.isFinish == true)
+                    {
+                        var user = await _userManager.GetUserAsync(User);
+                        user.Experience = user.Experience + task.Score;
+                        await _userManager.UpdateAsync(user);
+                    }
                     _context.Update(task);
                     await _context.SaveChangesAsync();
                 }
