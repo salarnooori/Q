@@ -27,8 +27,11 @@ body {
     --input-padding-y: .75rem;
 }
 
-body {
+body{
     background: linear-gradient(to top, var(--my-back-color), var(--my-for-color));
+}
+.modal-content {
+    background: linear-gradient(to bottom, var(--my-back-color), var(--my-for-color));
 }
 .card-signin {
     border: 1px solid #00fcff;
