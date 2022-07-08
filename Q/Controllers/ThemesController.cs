@@ -12,7 +12,7 @@ namespace Q.Controllers
     public class ThemesController : Controller
     {
         private readonly QTaskContext _context;
-
+        
         public ThemesController(QTaskContext context)
         {
             _context = context;
@@ -21,10 +21,12 @@ namespace Q.Controllers
         // GET: Themes
         public async Task<IActionResult> Index()
         {
-              return _context.Theme != null ? 
+            return _context.Theme != null ? 
                           View(await _context.Theme.ToListAsync()) :
                           Problem("Entity set 'QTaskContext.Theme'  is null.");
         }
+
+
 
         // GET: Themes/Details/5
         public async Task<IActionResult> Details(int? id)

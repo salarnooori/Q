@@ -18,12 +18,12 @@
     <header class="bg-warning">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                
+
                 <div class="row navbar-collapse collapse d-sm-inline-flex justify-content-between text-center">
                     <p class="m-0 col-4">Score : @UserManager.GetUserAsync(User).Result.Experience</p>
                     <a class="m-0 col-4 navbar-brand text-dark" asp-area="" asp-controller="Home" asp-action="Index"> Wellcome To Q</a>
                     <partial name="_LoginPartial.cshtml" />
-                    
+
                 </div>
             </div>
         </nav>
@@ -34,10 +34,53 @@
         </main>
     </div>
 
-    
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    
+    <script>
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays*24*60*60*1000));
+            let expires = "expires="+ d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for(let i = 0; i <ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+            
+        var r = document.querySelector(':root');
+
+        function myFunction_set(backC,forC) {
+            r.style.setProperty('--my-back-color', backC);
+            r.style.setProperty('--my-for-color', forC);
+        }
+
+    </script>
+    <script type="text/javascript">
+        $(window).on('load', function() {
+            var backC = getCookie("BackC");
+            var forC = getCookie("ForC");
+            if(backC != null && forC != null){
+                
+                myFunction_set(backC,forC);
+                
+            }
+        });
+    </script>   
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

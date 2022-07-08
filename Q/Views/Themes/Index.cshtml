@@ -31,23 +31,41 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HexForgroundColor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HexBackgroundColor)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HexForgroundColor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HexBackgroundColor)
+                </td>
+                <td>
+                    <a href="#" class="changeTheme" BackC="@item.HexBackgroundColor" ForC="@item.HexForgroundColor">Use</a> |
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@section Scripts{
+
+<script>
+    $( ".changeTheme" ).click(function() {
+        var backC = $(this).attr("BackC");
+        var forC = $(this).attr("ForC");
+
+        setCookie("BackC",backC,5);
+        setCookie("ForC",forC,5);
+
+        myFunction_set(backC,forC);
+    });
+</script>
+
+}
