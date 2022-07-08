@@ -135,6 +135,9 @@ body {
 .form-floating {
     background-color: black;
 }
+.field-validation-error {
+    background-color: black;
+}
 
 .form-control {
     background-color: #176d99 !important;
